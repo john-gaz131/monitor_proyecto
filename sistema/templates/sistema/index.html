@@ -1,0 +1,66 @@
+{% extends 'sistema/base.html' %}
+{% block content %}
+<h1 class="mb-4">Monitoreo del Sistema</h1>
+
+<div class="row g-3">
+  <!-- CPU -->
+  <div class="col-md-3">
+    <div class="card shadow-sm">
+      <div class="card-body text-center">
+        <h6 class="card-title">CPU</h6>
+        <p class="display-6">{{ cpu|default:'N/D' }}%</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RAM -->
+  <div class="col-md-3">
+    <div class="card shadow-sm">
+      <div class="card-body text-center">
+        <h6 class="card-title">RAM usada</h6>
+        <p class="mb-0">
+          {{ ram_usada|floatformat:1 }} GB /
+          {{ ram_total|floatformat:1 }} GB
+        </p>
+        <p class="display-6">{{ ram_pct|default:'N/D' }}%</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Disco -->
+  <div class="col-md-3">
+    <div class="card shadow-sm">
+      <div class="card-body text-center">
+        <h6 class="card-title">Disco</h6>
+        <p class="mb-0">Libre: {{ disco_libre|floatformat:1 }} GB</p>
+        <p class="display-6">{{ disco_pct|default:'N/D' }}%</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sistema -->
+  <div class="col-md-3">
+    <div class="card shadow-sm">
+      <div class="card-body text-center">
+        <h6 class="card-title">Sistema</h6>
+        <p>{{ so }} {{ so_release }}</p>
+        <p>Núcleos: {{ nucleos_fisicos }} F / {{ nucleos_logicos }} L</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 text-center">
+  <button id="btnRefresh" class="btn btn-primary">Actualizar</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('btnRefresh')
+        .addEventListener('click', () => location.reload());
+
+// Descomenta para refresco automático cada 30 s
+// setInterval(() => location.reload(), 30000);
+</script>
+{% endblock %}
